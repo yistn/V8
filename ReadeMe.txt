@@ -1,0 +1,10 @@
+#下载编译步骤
+git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+export PATH=`pwd`/depot_tools:$PATH
+fetch v8
+echo "target_os = ['android']" >> ./.gclient && gclient sync -j16 --nohooks
+cd v8
+tools/dev/v8gen.py android.arm.release
+ninja -C out.gn/android.arm.release
+
+d8 natives_blob.bin snapshot_blob.bin 是执行必要文件, 在Android真机或模拟器上执行.
